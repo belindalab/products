@@ -343,12 +343,9 @@ const InfoTab: React.FC<InfoTabProps> = ({ data, loading, onToast }) => {
       {/* ── Video ─────────────────────────────────────────────────────── */}
       {vidKey && <VideoPlayer url={data[vidKey]} />}
 
-      {/* ── Action buttons (after video, equal width) ─────────────────── */}
+      {/* ── Action buttons (after video): column on mobile, row on desktop ─ */}
       {hasActions && (
-        <div
-          className="grid gap-2"
-          style={{ gridTemplateColumns: `repeat(${linkKeys.length + (generateDoctorCopyText(data) ? 1 : 0)}, minmax(0, 1fr))` }}
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
           {linkKeys.map(key => {
             const { label, color } = getLinkMeta(key);
             return (
@@ -357,30 +354,30 @@ const InfoTab: React.FC<InfoTabProps> = ({ data, loading, onToast }) => {
                 href={String(data[key])}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex items-center justify-center gap-2 py-3 px-3 rounded-xl text-sm font-semibold shadow-sm transition-all active:scale-95 ${color}`}
+                className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-semibold shadow-sm transition-all active:scale-95 ${color}`}
               >
                 {key.toLowerCase().includes('инструкц') ? (
-                  <BookOpen size={16} />
+                  <BookOpen size={16} className="flex-shrink-0" />
                 ) : key.toLowerCase().includes('саломат') || key.toLowerCase().includes('системе') ? (
-                  <ShoppingCart size={16} />
+                  <ShoppingCart size={16} className="flex-shrink-0" />
                 ) : (
-                  <ExternalLink size={16} />
+                  <ExternalLink size={16} className="flex-shrink-0" />
                 )}
-                <span className="truncate">{label}</span>
+                <span className="min-w-0 sm:truncate">{label}</span>
               </a>
             );
           })}
           {generateDoctorCopyText(data) && (
             <button
               onClick={handleCopyForDoctor}
-              className={`flex items-center justify-center gap-2 py-3 px-3 rounded-xl text-sm font-medium transition-all active:scale-95 border ${
+              className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-medium transition-all active:scale-95 border col-span-full sm:col-span-1 ${
                 copied
                   ? 'bg-green-50 border-green-200 text-green-700'
                   : 'bg-gray-50 border-gray-200 text-gray-700 hover:bg-gray-100'
               }`}
             >
-              {copied ? <CheckCircle2 size={16} /> : <Copy size={16} />}
-              <span className="truncate">{copied ? 'Скопировано' : 'Скопировать для врача'}</span>
+              {copied ? <CheckCircle2 size={16} className="flex-shrink-0" /> : <Copy size={16} className="flex-shrink-0" />}
+              <span className="min-w-0 sm:truncate">{copied ? 'Скопировано' : 'Скопировать для врача'}</span>
             </button>
           )}
         </div>

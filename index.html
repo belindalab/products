@@ -50,9 +50,22 @@
       }
     </script>
     <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+      }
       body {
         background-color: #F3F4F6;
         -webkit-tap-highlight-color: transparent;
+      }
+      #root {
+        height: 100%;
+        overflow: hidden;
+      }
+      /* Smooth scroll on iOS */
+      .overflow-y-auto {
+        -webkit-overflow-scrolling: touch;
       }
       /* Hide scrollbar for clean UI in lists */
       .no-scrollbar::-webkit-scrollbar {
